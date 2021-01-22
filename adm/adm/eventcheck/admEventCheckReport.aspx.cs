@@ -26,6 +26,10 @@ public partial class adm_eventcheck_admEventCheckReport : System.Web.UI.Page
     {
         var eventid = txtSearchEventId.Text;
         var productIds = txtSearchProductID.Text;
+
+        if (string.IsNullOrEmpty(eventid) && string.IsNullOrEmpty(productIds))
+            return;
+
         var dtProducts = _eventCheckService.GetProducts(eventid, productIds);
         var dtItems = _eventCheckService.GetProductItems(eventid, productIds);
 
