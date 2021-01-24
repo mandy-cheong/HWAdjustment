@@ -108,3 +108,22 @@
 
                             </Columns>
                         </asp:GridView>--%>
+
+      <%--<asp:GridView ID="gvProductItems" runat="server" class="am-table am-table-bordered am-table-hover" AutoGenerateColumns="false">
+                    <Columns>
+                        <asp:BoundField DataField="商品ID" HeaderText="商品ID" />
+                        <asp:BoundField DataField="商品名稱" HeaderText="商品名稱" />
+                        <asp:BoundField DataField="規格ID" HeaderText="規格ID" />
+                        <asp:BoundField DataField="規格名稱" HeaderText="規格名稱" />
+                        <asp:BoundField DataField="常售價" HeaderText="常售價" />
+                        <asp:BoundField DataField="活動價" HeaderText="活動價" />
+                        <asp:BoundField DataField="是否預購" HeaderText="是否預購" />
+                        <asp:BoundField DataField="庫存POOL" HeaderText="庫存POOL" />
+                        <asp:BoundField DataField="可售數量" HeaderText="可售數量" />
+                        <asp:BoundField DataField="品編" HeaderText="品編" />
+                        <asp:BoundField DataField="單份數量" HeaderText="單份數量" />
+                        <asp:BoundField DataField="庫存1" HeaderText="庫存1" />
+                        <asp:BoundField DataField="庫存2" HeaderText="庫存2" />
+                        <asp:BoundField DataField="庫存3" HeaderText="庫存3" />
+                    </Columns>
+                </asp:GridView>--%>

@@ -14,7 +14,6 @@ public class EventCheckFilter
         // TODO: Add constructor logic here
         //
     }
-
     public int EventId { get; set; }
     public string ProductIds { get; set; }
     public int CurrentPage { get; set; }

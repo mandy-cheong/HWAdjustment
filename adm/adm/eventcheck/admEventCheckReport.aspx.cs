@@ -6,6 +6,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -14,7 +15,6 @@ public partial class adm_eventcheck_admEventCheckReport : System.Web.UI.Page
     private readonly EventCheckService _eventCheckService;
     public adm_eventcheck_admEventCheckReport()
     {
-
         _eventCheckService = new EventCheckService();
     }
     protected void Page_Load(object sender, EventArgs e)
@@ -26,12 +26,16 @@ public partial class adm_eventcheck_admEventCheckReport : System.Web.UI.Page
     {
         var eventid = txtSearchEventId.Text;
         var productIds = txtSearchProductID.Text;
+        var eventcheckfilter = new EventCheckFilter { ProductIds = productIds };
 
         if (string.IsNullOrEmpty(eventid) && string.IsNullOrEmpty(productIds))
             return;
 
-        var dtProducts = _eventCheckService.GetProducts(eventid, productIds);
-        var dtItems = _eventCheckService.GetProductItems(eventid, productIds);
+        if (FieldCheck.isInt(eventid))
+            eventcheckfilter.EventId = int.Parse(eventid);
+
+        var dtProducts = _eventCheckService.GetExportProducts(eventcheckfilter);
+        var dtItems = _eventCheckService.GetExportProductItems(eventcheckfilter);
 
         var dts = new List<DataTable>();
         if (dtProducts.Rows != null && dtProducts != null)
@@ -48,24 +52,7 @@ public partial class adm_eventcheck_admEventCheckReport : System.Web.UI.Page
         ExportDataTableToExcelUseNpoi(dts, "活動檢查報表");
 
     }
-
-    protected void btnSearch_Click(object sender, EventArgs e)
-    {
-        var eventid = txtSearchEventId.Text;
-        var productIds = txtSearchProductID.Text;
-
-        if (string.IsNullOrEmpty(eventid) && string.IsNullOrEmpty(productIds))
-            return;
-
-        var dtProducts = _eventCheckService.GetProducts(eventid, productIds);
-        var dtItems = _eventCheckService.GetProductItems(eventid, productIds);
-
-        gvProductItems.DataSource = dtItems;
-        gvProductItems.DataBind();
-        gvProducts.DataSource = dtProducts;
-        gvProducts.DataBind();
-    }
-
+   
     public static void ExportDataTableToExcelUseNpoi(List<DataTable> dts, string fileName)
     {
         MemoryStream ms = new MemoryStream();
@@ -111,6 +98,24 @@ public partial class adm_eventcheck_admEventCheckReport : System.Web.UI.Page
         wb = null;
         ms.Close();
         ms.Dispose();
+    }
+
+    [WebMethod]
+    public static List<EventCheckProduct> GetProducts(EventCheckFilter eventCheckFilter)
+    {
+        var eventService = new EventCheckService();
+        var data = eventService.GetProducts(eventCheckFilter);
+
+        return data;
+    }
+
+    [WebMethod]
+    public static List<EventCheckItem> GetProductItems(EventCheckFilter eventCheckFilter)
+    {
+        var eventService = new EventCheckService();
+        var data = eventService.GetProductItems(eventCheckFilter);
+
+        return data;
     }
 
 }
