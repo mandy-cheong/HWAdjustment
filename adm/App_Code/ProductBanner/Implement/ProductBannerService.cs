@@ -53,4 +53,9 @@ public class ProductBannerService
 
         }
     }
+
+    public List<Banner> GetProductInfo()
+    {
+        return new List<Banner>();
+    }
 }
